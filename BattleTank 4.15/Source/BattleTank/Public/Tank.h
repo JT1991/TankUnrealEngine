@@ -47,4 +47,7 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UTankBarrel* Barrel = nullptr;//local barrel ref for projectile spawning
+
+	float ReloadTimeSeconds = 3;
+	double LastFireTime = 0;
 };
