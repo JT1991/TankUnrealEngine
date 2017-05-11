@@ -19,6 +19,7 @@ void ATankAiController::Tick(float DeltaTime)
 
 	if (PlayerTank) {
 		//TODO move towards the player
+		MoveToActor(PlayerTank, AcceptanceRadius);//check unit is in cm
 		//aim at the player
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
