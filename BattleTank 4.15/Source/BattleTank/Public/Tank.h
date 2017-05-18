@@ -1,12 +1,13 @@
-// Copyright EmbraceIT Ltd.
+// Copyright Thorn Productions Ltd
 
 #pragma once
 
 #include "GameFramework/Pawn.h"
-#include "Tank.generated.h" // Put new includes above
+#include "Tank.generated.h"
 
-// Forward declarations
+//forward declarations
 class UTankBarrel;
+class UTankTurret;
 class UTankAimingComponent;
 class AProjectile;
 
@@ -18,7 +19,7 @@ class BATTLETANK_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = "Firing")
+	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
 protected:
@@ -31,18 +32,16 @@ private:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	// TODO remove once firing is moved to aiming component
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
-    
-	// Local barrel reference for spawning projectile
-	UTankBarrel* Barrel = nullptr; // TODO Remove
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeSeconds = 3;
+
+	UTankBarrel* Barrel = nullptr; // TODO remove
 
 	double LastFireTime = 0;
 };

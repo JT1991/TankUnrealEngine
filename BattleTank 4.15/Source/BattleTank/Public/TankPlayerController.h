@@ -1,49 +1,48 @@
-// Copyright EmbraceIT Ltd.
+// Copyright Thorn Productions Ltd
 
 #pragma once
 
 #include "GameFramework/PlayerController.h"
-#include "TankPlayerController.generated.h" // Must be the last include
-
-class ATank;
-class UTankTankAimingComponent;
+#include "TankPlayerController.generated.h"
 
 /**
  * Responsible for helping the player aim.
  */
+
+class ATank;
+class UTankAimingComponent;
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
+	
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const;
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
+
 	virtual void BeginPlay() override;
-
 	virtual void Tick( float DeltaTime ) override;
-
-	// Start the tank moving the barrel so that a shot would hit where
-	// the crosshair intersects the world
+	//the the tank barrel toward crosshair position
 	void AimTowardsCrosshair();
 
-	// Return an OUT parameter, true if hit landscape
-	bool GetSightRayHitLocation(FVector& HitLocation) const;
+	//return out parameter, true if hit landscape
+	bool GetSightRayHitLocation( FVector& HitLocation ) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 
 	UPROPERTY(EditDefaultsOnly)
-	float CrosshairXLocation = 0.5;
+	float CrossHairXLocation = 0.5f;
 
 	UPROPERTY(EditDefaultsOnly)
-	float CrosshairYLocation = 0.3333;
+	float CrossHairYLocation = 0.33333f;
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
-
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
-	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 };
