@@ -10,7 +10,6 @@ UTankTrack::UTankTrack()
 
 void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	UE_LOG(LogTemp, Warning, TEXT("TRACK TICKING"));
 	//Calculate slippage speed
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 	//workout the acceleration
@@ -21,6 +20,16 @@ void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActor
 	TankRoot->AddForce(CorrectionForce);
 }
 
+void UTankTrack::BeginPlay() 
+{
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
+
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpluse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("On Hit working"));
+}
+
 void UTankTrack::SetThrottle(float Throttle)
 {
 	//TODO clamp throttle value- otherwise player can cheat by changing their tank speed.
@@ -28,7 +37,6 @@ void UTankTrack::SetThrottle(float Throttle)
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-
 }
 
 
