@@ -9,6 +9,11 @@ UTankTrack::UTankTrack()
 
 }
 
+void UTankTrack::BeginPlay() 
+{
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
+
 void UTankTrack::ApplySidewaysForce()
 {
 	//workout the acceleration
@@ -21,10 +26,6 @@ void UTankTrack::ApplySidewaysForce()
 	TankRoot->AddForce(CorrectionForce);
 }
 
-void UTankTrack::BeginPlay() 
-{
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
-}
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpluse, const FHitResult& Hit)
 {
