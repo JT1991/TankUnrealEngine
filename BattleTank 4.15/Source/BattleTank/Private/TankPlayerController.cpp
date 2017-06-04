@@ -6,7 +6,7 @@
 #include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 #include "Tank.h"
-#include "..\Public\TankAiController.h"
+//#include "..\Public\TankAiController.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -29,7 +29,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 	if (InPawn)
 	{
 		auto ControlledTank = Cast<ATank>(InPawn);
-		if (!ensure(PossessedTank)) { return; }
+		if (!ensure(ControlledTank)) { return; }
 
 		ControlledTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnControlledTankDeath);
 	}
